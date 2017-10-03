@@ -1,12 +1,12 @@
-%global commit adc6c346cc3570a232d336fcebfb0905eaaa9b96
+%global commit 35dd90995f22dc3cb854380a659384bcffb0c59c
 %global short_commit %(c=%{commit}; echo ${c:0:7})
-%global commit_date 20170407
+%global commit_date 20170704
 
 %global kodi_addon pvr.vbox
 %global kodi_version 17.0
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
-Version:        3.6.10
+Version:        3.6.12
 Release:        1%{?dist}
 Summary:        Kodi VBox TV Gateway PVR addon
 
@@ -57,6 +57,9 @@ rm -r lib/tinyxml2/
 
 
 %changelog
+* Tue Oct 03 2017 Mohamed El Morabity <melmorabity@fedoraproject.org> - 3.6.12-1
+- Update to 3.6.12
+
 * Fri Apr 28 2017 Mohamed El Morabity <melmorabity@fedorapeople.org> - 3.6.10-1
 - Update to latest stable release for Kodi 17
 

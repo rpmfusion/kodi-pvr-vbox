@@ -7,7 +7,7 @@
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 Version:        3.6.12
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Kodi VBox TV Gateway PVR addon
 
 Group:          Applications/Multimedia
@@ -16,6 +16,11 @@ URL:            https://github.com/kodi-pvr/%{kodi_addon}/
 Source0:        https://github.com/kodi-pvr/%{kodi_addon}/archive/%{short_commit}/%{name}-%{short_commit}.tar.gz
 # Use external tinyxml2 library
 Patch0:         %{name}-3.6.10-use_external_tinyxml2.patch
+
+%if 0%{?fedora} >= 28
+# Use XML_SUCCESS enum instead of XML_NO_ERROR, which has been deleted in tinyxml2 4.0
+Patch1:         kodi-pvr-vbox-3.6.12-tinyxml2_v4.patch
+%endif
 
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
@@ -57,6 +62,9 @@ rm -r lib/tinyxml2/
 
 
 %changelog
+* Mon Mar 12 2018 Leigh Scott <leigh123linux@googlemail.com> - 3.6.12-3
+- Patch for new tinyxml2
+
 * Thu Mar 01 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 3.6.12-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 

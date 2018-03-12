@@ -1,0 +1,48 @@
+--- ./src/vbox/CategoryGenreMapper.cpp.orig
++++ ./src/vbox/CategoryGenreMapper.cpp
+@@ -75,7 +75,7 @@
+     std::unique_ptr<std::string> contents = utilities::ReadFileContents(fileHandle);
+ 
+     // Try to parse the document
+-    if (document.Parse(contents->c_str(), contents->size()) != XML_NO_ERROR)
++    if (document.Parse(contents->c_str(), contents->size()) != XML_SUCCESS)
+       throw vbox::InvalidXMLException("XML parsing failed: " + std::string(document.ErrorName()));
+ 
+     // Create mappings
+
+--- ./src/vbox/GuideChannelMapper.cpp.orig
++++ ./src/vbox/GuideChannelMapper.cpp
+@@ -88,7 +88,7 @@
+     std::unique_ptr<std::string> contents = utilities::ReadFileContents(fileHandle);
+ 
+     // Try to parse the document
+-    if (document.Parse(contents->c_str(), contents->size()) != XML_NO_ERROR)
++    if (document.Parse(contents->c_str(), contents->size()) != XML_SUCCESS)
+       throw vbox::InvalidXMLException("XML parsing failed: " + std::string(document.ErrorName()));
+ 
+     // Create mappings
+
+--- ./src/vbox/ReminderManager.cpp.orig
++++ ./src/vbox/ReminderManager.cpp
+@@ -203,7 +203,7 @@
+   std::unique_ptr<std::string> contents = utilities::ReadFileContents(fileHandle);
+ 
+   // Try to parse the document
+-  if (document.Parse(contents->c_str(), contents->size()) != XML_NO_ERROR)
++  if (document.Parse(contents->c_str(), contents->size()) != XML_SUCCESS)
+     throw vbox::InvalidXMLException("XML parsing failed: " + std::string(document.ErrorName()));
+ 
+   unsigned int minsBeforePop = g_vbox->GetSettings().m_remindMinsBeforeProg;
+
+--- ./src/vbox/response/Response.cpp.orig
++++ ./src/vbox/response/Response.cpp
+@@ -43,7 +43,7 @@
+ void Response::ParseRawResponse(const std::string &rawResponse)
+ {
+   // Try to parse the response as XML
+-  if (m_document->Parse(rawResponse.c_str(), rawResponse.size()) != XML_NO_ERROR)
++  if (m_document->Parse(rawResponse.c_str(), rawResponse.size()) != XML_SUCCESS)
+     throw vbox::InvalidXMLException("XML parsing failed: " + std::string(m_document->ErrorName()));
+ 
+   // Parse the response status
+

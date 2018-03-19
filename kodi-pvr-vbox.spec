@@ -1,26 +1,22 @@
-%global commit 35dd90995f22dc3cb854380a659384bcffb0c59c
-%global short_commit %(c=%{commit}; echo ${c:0:7})
-%global commit_date 20170704
+%global commit 57f31984008bac8047b6d74d338980b6dd9ebd28
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global commitdate 20180205
 
 %global kodi_addon pvr.vbox
-%global kodi_version 17.0
+%global kodi_version 18.0
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
-Version:        3.6.12
-Release:        3%{?dist}
-Summary:        Kodi VBox TV Gateway PVR addon
+Version:        4.3.1
+Release:        1%{?dist}
+Summary:        VBox Home TV Gateway PVR client for Kodi
 
-Group:          Applications/Multimedia
 License:        GPLv2+
 URL:            https://github.com/kodi-pvr/%{kodi_addon}/
-Source0:        https://github.com/kodi-pvr/%{kodi_addon}/archive/%{short_commit}/%{name}-%{short_commit}.tar.gz
+Source0:        https://github.com/kodi-pvr/%{kodi_addon}/archive/%{shortcommit}/%{kodi_addon}-%{shortcommit}.tar.gz
 # Use external tinyxml2 library
-Patch0:         %{name}-3.6.10-use_external_tinyxml2.patch
-
-%if 0%{?fedora} >= 28
-# Use XML_SUCCESS enum instead of XML_NO_ERROR, which has been deleted in tinyxml2 4.0
-Patch1:         kodi-pvr-vbox-3.6.12-tinyxml2_v4.patch
-%endif
+Patch0:         %{name}-4.3.1-use_external_tinyxml2.patch
+# Fix build with tinyxml2 >= 6.0.0
+Patch1:         %{name}-4.3.1-tinyxml2_6.patch
 
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
@@ -32,10 +28,7 @@ Requires:       kodi >= %{kodi_version}
 ExclusiveArch:  i686 x86_64
 
 %description
-This is a PVR addon for interfacing with VBox Communications' XTi TV
-Gateways. It supports all the basic functionality you would expect, such as
-watching, recording and timeshifting. Additionally, it supports augmenting the
-over-the-air guide data with external XMLTV data.
+%{summary}.
 
 
 %prep
@@ -46,7 +39,7 @@ rm -r lib/tinyxml2/
 
 
 %build
-%cmake -DCMAKE_INSTALL_LIBDIR=%{_libdir}/kodi/ .
+%cmake .
 %make_build
 
 
@@ -56,12 +49,14 @@ rm -r lib/tinyxml2/
 
 %files
 %doc README.md %{kodi_addon}/changelog.txt
-%license LICENSE.md
 %{_libdir}/kodi/addons/%{kodi_addon}/
 %{_datadir}/kodi/addons/%{kodi_addon}/
 
 
 %changelog
+* Fri Mar 16 2018 Mohamed El Morabity <melmorabity@fedoraproject.org> - 4.3.1-1
+- Update to latest stable release for Kodi 18
+
 * Mon Mar 12 2018 Leigh Scott <leigh123linux@googlemail.com> - 3.6.12-3
 - Patch for new tinyxml2
 

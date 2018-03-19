@@ -1,6 +1,7 @@
---- ./src/vbox/CategoryGenreMapper.cpp.orig
-+++ ./src/vbox/CategoryGenreMapper.cpp
-@@ -75,7 +75,7 @@
+diff -up ./src/vbox/CategoryGenreMapper.cpp.orig ./src/vbox/CategoryGenreMapper.cpp
+--- ./src/vbox/CategoryGenreMapper.cpp.orig	2018-03-15 18:59:30.656263927 +0100
++++ ./src/vbox/CategoryGenreMapper.cpp	2018-03-15 19:34:26.992655689 +0100
+@@ -75,7 +75,7 @@ bool CategoryGenreMapper::LoadCategoryTo
      std::unique_ptr<std::string> contents = utilities::ReadFileContents(fileHandle);
  
      // Try to parse the document
@@ -9,10 +10,10 @@
        throw vbox::InvalidXMLException("XML parsing failed: " + std::string(document.ErrorName()));
  
      // Create mappings
-
---- ./src/vbox/GuideChannelMapper.cpp.orig
-+++ ./src/vbox/GuideChannelMapper.cpp
-@@ -88,7 +88,7 @@
+diff -up ./src/vbox/GuideChannelMapper.cpp.orig ./src/vbox/GuideChannelMapper.cpp
+--- ./src/vbox/GuideChannelMapper.cpp.orig	2018-03-15 18:59:30.658263875 +0100
++++ ./src/vbox/GuideChannelMapper.cpp	2018-03-15 19:34:26.993655657 +0100
+@@ -88,7 +88,7 @@ void GuideChannelMapper::Load()
      std::unique_ptr<std::string> contents = utilities::ReadFileContents(fileHandle);
  
      // Try to parse the document
@@ -21,10 +22,10 @@
        throw vbox::InvalidXMLException("XML parsing failed: " + std::string(document.ErrorName()));
  
      // Create mappings
-
---- ./src/vbox/ReminderManager.cpp.orig
-+++ ./src/vbox/ReminderManager.cpp
-@@ -203,7 +203,7 @@
+diff -up ./src/vbox/ReminderManager.cpp.orig ./src/vbox/ReminderManager.cpp
+--- ./src/vbox/ReminderManager.cpp.orig	2018-03-15 18:59:30.653264006 +0100
++++ ./src/vbox/ReminderManager.cpp	2018-03-15 19:34:26.991655720 +0100
+@@ -203,7 +203,7 @@ void ReminderManager::Load()
    std::unique_ptr<std::string> contents = utilities::ReadFileContents(fileHandle);
  
    // Try to parse the document
@@ -33,10 +34,10 @@
      throw vbox::InvalidXMLException("XML parsing failed: " + std::string(document.ErrorName()));
  
    unsigned int minsBeforePop = g_vbox->GetSettings().m_remindMinsBeforeProg;
-
---- ./src/vbox/response/Response.cpp.orig
-+++ ./src/vbox/response/Response.cpp
-@@ -43,7 +43,7 @@
+diff -up ./src/vbox/response/Response.cpp.orig ./src/vbox/response/Response.cpp
+--- ./src/vbox/response/Response.cpp.orig	2018-02-05 09:22:59.000000000 +0100
++++ ./src/vbox/response/Response.cpp	2018-03-15 19:34:26.994655626 +0100
+@@ -43,7 +43,7 @@ Response::~Response()
  void Response::ParseRawResponse(const std::string &rawResponse)
  {
    // Try to parse the response as XML
@@ -45,4 +46,3 @@
      throw vbox::InvalidXMLException("XML parsing failed: " + std::string(m_document->ErrorName()));
  
    // Parse the response status
-

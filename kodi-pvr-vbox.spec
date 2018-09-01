@@ -1,13 +1,13 @@
-%global commit 57f31984008bac8047b6d74d338980b6dd9ebd28
+%global commit 40ca81f334443f3a784231765f9bc0287014bf95
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global commitdate 20180205
+%global commitdate 20180825
 
 %global kodi_addon pvr.vbox
 %global kodi_version 18.0
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
-Version:        4.3.1
-Release:        2%{?dist}
+Version:        4.4.5
+Release:        1%{?dist}
 Summary:        VBox Home TV Gateway PVR client for Kodi
 
 License:        GPLv2+
@@ -25,7 +25,7 @@ BuildRequires:  kodi-platform-devel >= %{kodi_version}
 BuildRequires:  pkgconfig(tinyxml2)
 BuildRequires:  platform-devel
 Requires:       kodi >= %{kodi_version}
-ExclusiveArch:  i686 x86_64
+ExclusiveArch:  i686 x86_64 aarch64
 
 %description
 %{summary}.
@@ -54,6 +54,10 @@ rm -r lib/tinyxml2/
 
 
 %changelog
+* Sat Sep 01 2018 Mohamed El Morabity <melmorabity@fedoraproject.org> - 4.4.5-1
+- Update to 4.4.5
+- Enable aarch64 build
+
 * Thu Jul 26 2018 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 4.3.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 

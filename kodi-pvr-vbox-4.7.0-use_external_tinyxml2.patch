@@ -1,7 +1,7 @@
 diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
---- ./CMakeLists.txt.orig	2018-02-05 09:22:59.000000000 +0100
-+++ ./CMakeLists.txt	2018-03-15 18:55:50.576296020 +0100
-@@ -9,9 +9,12 @@ enable_language(CXX)
+--- ./CMakeLists.txt.orig	2019-10-26 13:32:01.000000000 +0200
++++ ./CMakeLists.txt	2020-01-13 16:43:01.375142646 +0100
+@@ -6,9 +6,12 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PAT
  find_package(Kodi REQUIRED)
  find_package(kodiplatform REQUIRED)
  find_package(p8-platform REQUIRED)
@@ -11,10 +11,10 @@ diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
  include_directories(${kodiplatform_INCLUDE_DIRS}
                      ${p8-platform_INCLUDE_DIRS}
 +                    ${TINYXML2_INCLUDE_DIRS}
-                     ${KODI_INCLUDE_DIR}
+                     ${KODI_INCLUDE_DIR}/.. # Hack way with "/..", need bigger Kodi cmake rework to match right include ways
                      ${PROJECT_SOURCE_DIR})
  
-@@ -87,13 +90,6 @@ source_group("Source Files\\vbox\\respon
+@@ -85,13 +88,6 @@ source_group("Source Files\\vbox\\respon
  source_group("Source Files\\timeshift" FILES ${VBOX_SOURCES_TIMESHIFT})
  source_group("Source Files\\xmltv" FILES ${VBOX_SOURCES_XMLTV})
  
@@ -24,28 +24,26 @@ diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
 -                lib/tinyxml2/tinyxml2.cpp)
 -
 -source_group("Library Files\\tinyxml2" FILES ${VBOX_LIBRARIES_TINYXML2})
--                 
+-
  # Resource files
- set(VBOX_RESOURCES 
+ set(VBOX_RESOURCES
                  README.md
-@@ -113,10 +109,11 @@ list(APPEND VBOX_SOURCES
+@@ -111,10 +107,9 @@ list(APPEND VBOX_SOURCES
                  ${VBOX_SOURCES_VBOX_RESPONSE}
                  ${VBOX_SOURCES_TIMESHIFT}
                  ${VBOX_SOURCES_XMLTV}
 -                ${VBOX_RESOURCES}
 -                ${VBOX_LIBRARIES_TINYXML2})
 +                ${VBOX_RESOURCES})
-+
-+set(DEPLIBS ${p8-platform_LIBRARIES}
-+            ${TINYXML2_LIBRARIES})
  
 -set(DEPLIBS ${p8-platform_LIBRARIES})
++set(DEPLIBS ${p8-platform_LIBRARIES} ${TINYXML2_LIBRARIES})
  build_addon(pvr.vbox VBOX DEPLIBS)
  
  include(CPack)
 diff -up ./src/vbox/CategoryGenreMapper.cpp.orig ./src/vbox/CategoryGenreMapper.cpp
---- ./src/vbox/CategoryGenreMapper.cpp.orig	2018-02-05 09:22:59.000000000 +0100
-+++ ./src/vbox/CategoryGenreMapper.cpp	2018-03-15 18:59:30.656263927 +0100
+--- ./src/vbox/CategoryGenreMapper.cpp.orig	2019-10-26 13:32:01.000000000 +0200
++++ ./src/vbox/CategoryGenreMapper.cpp	2020-01-13 16:42:43.950596705 +0100
 @@ -20,7 +20,7 @@
  */
  #include "CategoryGenreMapper.h"
@@ -56,8 +54,8 @@ diff -up ./src/vbox/CategoryGenreMapper.cpp.orig ./src/vbox/CategoryGenreMapper.
  #include "Utilities.h"
  #include "Exceptions.h"
 diff -up ./src/vbox/GuideChannelMapper.cpp.orig ./src/vbox/GuideChannelMapper.cpp
---- ./src/vbox/GuideChannelMapper.cpp.orig	2018-02-05 09:22:59.000000000 +0100
-+++ ./src/vbox/GuideChannelMapper.cpp	2018-03-15 18:59:30.658263875 +0100
+--- ./src/vbox/GuideChannelMapper.cpp.orig	2019-10-26 13:32:01.000000000 +0200
++++ ./src/vbox/GuideChannelMapper.cpp	2020-01-13 16:42:43.950596705 +0100
 @@ -21,7 +21,7 @@
  
  #include "GuideChannelMapper.h"
@@ -68,8 +66,8 @@ diff -up ./src/vbox/GuideChannelMapper.cpp.orig ./src/vbox/GuideChannelMapper.cp
  #include "Utilities.h"
  #include "../client.h"
 diff -up ./src/vbox/Reminder.cpp.orig ./src/vbox/Reminder.cpp
---- ./src/vbox/Reminder.cpp.orig	2018-02-05 09:22:59.000000000 +0100
-+++ ./src/vbox/Reminder.cpp	2018-03-15 18:59:30.666263664 +0100
+--- ./src/vbox/Reminder.cpp.orig	2019-10-26 13:32:01.000000000 +0200
++++ ./src/vbox/Reminder.cpp	2020-01-13 16:42:43.951596679 +0100
 @@ -21,7 +21,7 @@
  #include "ContentIdentifier.h"
  #include "Reminder.h"
@@ -80,8 +78,8 @@ diff -up ./src/vbox/Reminder.cpp.orig ./src/vbox/Reminder.cpp
  #include "Utilities.h"
  #include "Exceptions.h"
 diff -up ./src/vbox/ReminderManager.cpp.orig ./src/vbox/ReminderManager.cpp
---- ./src/vbox/ReminderManager.cpp.orig	2018-02-05 09:22:59.000000000 +0100
-+++ ./src/vbox/ReminderManager.cpp	2018-03-15 18:59:30.653264006 +0100
+--- ./src/vbox/ReminderManager.cpp.orig	2019-10-26 13:32:01.000000000 +0200
++++ ./src/vbox/ReminderManager.cpp	2020-01-13 16:42:43.952596653 +0100
 @@ -21,7 +21,7 @@
  #include "ContentIdentifier.h"
  #include "ReminderManager.h"
@@ -92,20 +90,20 @@ diff -up ./src/vbox/ReminderManager.cpp.orig ./src/vbox/ReminderManager.cpp
  #include "Utilities.h"
  #include "Exceptions.h"
 diff -up ./src/vbox/response/Content.cpp.orig ./src/vbox/response/Content.cpp
---- ./src/vbox/response/Content.cpp.orig	2018-02-05 09:22:59.000000000 +0100
-+++ ./src/vbox/response/Content.cpp	2018-03-15 18:59:30.661263796 +0100
+--- ./src/vbox/response/Content.cpp.orig	2019-10-26 13:32:01.000000000 +0200
++++ ./src/vbox/response/Content.cpp	2020-01-13 16:42:43.952596653 +0100
 @@ -21,7 +21,7 @@
  
  #include "Content.h"
- #include "xbmc_pvr_types.h"
+ #include "kodi/xbmc_pvr_types.h"
 -#include "lib/tinyxml2/tinyxml2.h"
 +#include <tinyxml2.h>
  #include "../Channel.h"
  #include "../../xmltv/Utilities.h"
  #include "../../xmltv/Guide.h"
 diff -up ./src/vbox/response/Response.h.orig ./src/vbox/response/Response.h
---- ./src/vbox/response/Response.h.orig	2018-02-05 09:22:59.000000000 +0100
-+++ ./src/vbox/response/Response.h	2018-03-15 18:59:30.663263743 +0100
+--- ./src/vbox/response/Response.h.orig	2019-10-26 13:32:01.000000000 +0200
++++ ./src/vbox/response/Response.h	2020-01-13 16:42:43.953596627 +0100
 @@ -22,7 +22,7 @@
  
  #include <memory>
@@ -116,8 +114,8 @@ diff -up ./src/vbox/response/Response.h.orig ./src/vbox/response/Response.h
  namespace vbox {
    namespace response {
 diff -up ./src/xmltv/Guide.cpp.orig ./src/xmltv/Guide.cpp
---- ./src/xmltv/Guide.cpp.orig	2018-02-05 09:22:59.000000000 +0100
-+++ ./src/xmltv/Guide.cpp	2018-03-15 18:59:30.646264190 +0100
+--- ./src/xmltv/Guide.cpp.orig	2019-10-26 13:32:01.000000000 +0200
++++ ./src/xmltv/Guide.cpp	2020-01-13 16:42:43.953596627 +0100
 @@ -23,7 +23,7 @@
  #include <algorithm>
  #include "Channel.h"
@@ -128,8 +126,8 @@ diff -up ./src/xmltv/Guide.cpp.orig ./src/xmltv/Guide.cpp
  #include "../vbox/ContentIdentifier.h"
  
 diff -up ./src/xmltv/Programme.cpp.orig ./src/xmltv/Programme.cpp
---- ./src/xmltv/Programme.cpp.orig	2018-02-05 09:22:59.000000000 +0100
-+++ ./src/xmltv/Programme.cpp	2018-03-15 18:59:30.648264137 +0100
+--- ./src/xmltv/Programme.cpp.orig	2019-10-26 13:32:01.000000000 +0200
++++ ./src/xmltv/Programme.cpp	2020-01-13 16:42:43.954596602 +0100
 @@ -21,7 +21,7 @@
  
  #include "Programme.h"
@@ -140,12 +138,12 @@ diff -up ./src/xmltv/Programme.cpp.orig ./src/xmltv/Programme.cpp
  using namespace xmltv;
  using namespace tinyxml2;
 diff -up ./src/xmltv/Utilities.cpp.orig ./src/xmltv/Utilities.cpp
---- ./src/xmltv/Utilities.cpp.orig	2018-02-05 09:22:59.000000000 +0100
-+++ ./src/xmltv/Utilities.cpp	2018-03-15 18:59:30.651264058 +0100
-@@ -21,7 +21,7 @@
+--- ./src/xmltv/Utilities.cpp.orig	2019-10-26 13:32:01.000000000 +0200
++++ ./src/xmltv/Utilities.cpp	2020-01-13 16:42:43.955596576 +0100
+@@ -20,7 +20,7 @@
+ */
  
  #include "Utilities.h"
- #include "../compat.h"
 -#include "lib/tinyxml2/tinyxml2.h"
 +#include <tinyxml2.h>
  #include <algorithm>

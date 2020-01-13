@@ -1,20 +1,17 @@
-%global commit 40ca81f334443f3a784231765f9bc0287014bf95
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global commitdate 20180825
-
 %global kodi_addon pvr.vbox
 %global kodi_version 18.0
+%global kodi_codename Leia
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
-Version:        4.4.5
-Release:        4%{?dist}
+Version:        4.7.0
+Release:        1%{?dist}
 Summary:        VBox Home TV Gateway PVR client for Kodi
 
 License:        GPLv2+
 URL:            https://github.com/kodi-pvr/%{kodi_addon}/
-Source0:        https://github.com/kodi-pvr/%{kodi_addon}/archive/%{shortcommit}/%{kodi_addon}-%{shortcommit}.tar.gz
+Source0:        %{url}/archive/%{version}-%{kodi_codename}/%{kodi_addon}-%{version}.tar.gz
 # Use external tinyxml2 library
-Patch0:         %{name}-4.3.1-use_external_tinyxml2.patch
+Patch0:         %{name}-4.7.0-use_external_tinyxml2.patch
 # Fix build with tinyxml2 >= 6.0.0
 Patch1:         %{name}-4.3.1-tinyxml2_6.patch
 
@@ -32,7 +29,7 @@ ExcludeArch:    %{power64} ppc64le
 
 
 %prep
-%autosetup -n %{kodi_addon}-%{commit} -p0
+%autosetup -n %{kodi_addon}-%{version}-%{kodi_codename} -p0
 
 # Drop bundled tinyxml2 library
 rm -r lib/tinyxml2/
@@ -49,11 +46,15 @@ rm -r lib/tinyxml2/
 
 %files
 %doc README.md %{kodi_addon}/changelog.txt
+%license LICENSE.md
 %{_libdir}/kodi/addons/%{kodi_addon}/
 %{_datadir}/kodi/addons/%{kodi_addon}/
 
 
 %changelog
+* Mon Jan 13 2020 Mohamed El Morabity <melmorabity@fedoraproject.org> - 4.7.0-1
+- Update to 4.7.0
+
 * Fri Aug 09 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 4.4.5-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 

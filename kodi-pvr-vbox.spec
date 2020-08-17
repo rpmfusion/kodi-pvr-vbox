@@ -2,6 +2,8 @@
 %global kodi_version 18.0
 %global kodi_codename Leia
 
+%undefine __cmake_in_source_build
+
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 Version:        4.7.0
 Release:        2%{?dist}
@@ -15,7 +17,7 @@ Patch0:         %{name}-4.7.0-use_external_tinyxml2.patch
 # Fix build with tinyxml2 >= 6.0.0
 Patch1:         %{name}-4.3.1-tinyxml2_6.patch
 
-BuildRequires:  cmake
+BuildRequires:  cmake3
 BuildRequires:  gcc-c++
 BuildRequires:  kodi-devel >= %{kodi_version}
 BuildRequires:  kodi-platform-devel >= %{kodi_version}
@@ -36,12 +38,12 @@ rm -r lib/tinyxml2/
 
 
 %build
-%cmake .
-%make_build
+%cmake3
+%cmake3_build
 
 
 %install
-%make_install
+%cmake3_install
 
 
 %files

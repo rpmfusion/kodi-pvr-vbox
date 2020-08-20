@@ -1,28 +1,25 @@
 %global kodi_addon pvr.vbox
-%global kodi_version 18.0
-%global kodi_codename Leia
-
-%undefine __cmake_in_source_build
+%global kodi_version 19.0
+%global kodi_codename Matrix
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
-Version:        4.7.0
-Release:        3%{?dist}
+Version:        7.0.0
+Release:        1%{?dist}
 Summary:        VBox Home TV Gateway PVR client for Kodi
 
 License:        GPLv2+
 URL:            https://github.com/kodi-pvr/%{kodi_addon}/
 Source0:        %{url}/archive/%{version}-%{kodi_codename}/%{kodi_addon}-%{version}.tar.gz
 # Use external tinyxml2 library
-Patch0:         %{name}-4.7.0-use_external_tinyxml2.patch
+Patch0:         %{name}-7.0.0-use_external_tinyxml2.patch
 # Fix build with tinyxml2 >= 6.0.0
-Patch1:         %{name}-4.3.1-tinyxml2_6.patch
+Patch1:         %{name}-7.0.0-tinyxml2_6.patch
 
 BuildRequires:  cmake3
 BuildRequires:  gcc-c++
 BuildRequires:  kodi-devel >= %{kodi_version}
-BuildRequires:  kodi-platform-devel >= %{kodi_version}
+BuildRequires:  pkgconfig(p8-platform)
 BuildRequires:  pkgconfig(tinyxml2)
-BuildRequires:  platform-devel
 Requires:       kodi >= %{kodi_version}
 ExcludeArch:    %{power64} ppc64le
 
@@ -54,6 +51,9 @@ rm -r lib/tinyxml2/
 
 
 %changelog
+* Thu Aug 20 2020 Mohamed El Morabity <melmorabity@fedoraproject.org> - 7.0.0-1
+- Update to 7.0.0 (switch to Matrix branch)
+
 * Tue Aug 18 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 4.7.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 

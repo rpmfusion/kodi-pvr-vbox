@@ -1,20 +1,19 @@
 diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
---- ./CMakeLists.txt.orig	2020-06-13 06:07:30.000000000 +0000
-+++ ./CMakeLists.txt	2020-08-20 13:45:23.978000867 +0000
-@@ -5,9 +5,12 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PAT
+--- ./CMakeLists.txt.orig	2020-10-31 11:10:15.000000000 +0100
++++ ./CMakeLists.txt	2020-11-16 23:50:11.551101983 +0100
+@@ -4,8 +4,11 @@ project(pvr.vbox)
+ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR})
  
  find_package(Kodi REQUIRED)
- find_package(p8-platform REQUIRED)
 +find_package(PkgConfig)
 +pkg_check_modules(TINYXML2 REQUIRED tinyxml2)
  
- include_directories(${p8-platform_INCLUDE_DIRS}
-                     ${KODI_INCLUDE_DIR}/.. # Hack way with "/..", need bigger Kodi cmake rework to match right include ways
+ include_directories(${KODI_INCLUDE_DIR}/.. # Hack way with "/..", need bigger Kodi cmake rework to match right include ways
 +                    ${TINYXML2_INCLUDE_DIRS}
                      ${PROJECT_SOURCE_DIR})
  
  # Sources and headers
-@@ -81,13 +84,6 @@ source_group("Source Files\\vbox\\respon
+@@ -79,13 +82,6 @@ source_group("Source Files\\vbox\\respon
  source_group("Source Files\\timeshift" FILES ${VBOX_SOURCES_TIMESHIFT})
  source_group("Source Files\\xmltv" FILES ${VBOX_SOURCES_XMLTV})
  
@@ -28,99 +27,105 @@ diff -up ./CMakeLists.txt.orig ./CMakeLists.txt
  # Resource files
  set(VBOX_RESOURCES
                  README.md
-@@ -107,10 +103,9 @@ list(APPEND VBOX_SOURCES
+@@ -105,8 +101,9 @@ list(APPEND VBOX_SOURCES
                  ${VBOX_SOURCES_VBOX_RESPONSE}
                  ${VBOX_SOURCES_TIMESHIFT}
                  ${VBOX_SOURCES_XMLTV}
 -                ${VBOX_RESOURCES}
 -                ${VBOX_LIBRARIES_TINYXML2})
 +                ${VBOX_RESOURCES})
++
++set(DEPLIBS ${TINYXML2_LIBRARIES})
  
--set(DEPLIBS ${p8-platform_LIBRARIES})
-+set(DEPLIBS ${p8-platform_LIBRARIES} ${TINYXML2_LIBRARIES})
  build_addon(pvr.vbox VBOX DEPLIBS)
  
- include(CPack)
 diff -up ./src/vbox/CategoryGenreMapper.cpp.orig ./src/vbox/CategoryGenreMapper.cpp
---- ./src/vbox/CategoryGenreMapper.cpp.orig	2020-06-13 06:07:30.000000000 +0000
-+++ ./src/vbox/CategoryGenreMapper.cpp	2020-08-20 13:48:11.371869147 +0000
-@@ -16,7 +16,7 @@
- 
+--- ./src/vbox/CategoryGenreMapper.cpp.orig	2020-10-31 11:10:15.000000000 +0100
++++ ./src/vbox/CategoryGenreMapper.cpp	2020-11-16 23:51:26.598220828 +0100
+@@ -17,7 +17,8 @@
  #include <kodi/General.h>
  #include <kodi/addon-instance/pvr/EPG.h>
+ #include <kodi/tools/StringUtils.h>
 -#include <lib/tinyxml2/tinyxml2.h>
 +#include <tinyxml2.h>
- #include <p8-platform/util/StringUtils.h>
++#include <tinyxml2.h>
  
  // using namespace xmltv;
+ using namespace kodi::tools;
 diff -up ./src/vbox/GuideChannelMapper.cpp.orig ./src/vbox/GuideChannelMapper.cpp
---- ./src/vbox/GuideChannelMapper.cpp.orig	2020-06-13 06:07:30.000000000 +0000
-+++ ./src/vbox/GuideChannelMapper.cpp	2020-08-20 13:48:11.367869246 +0000
-@@ -14,7 +14,7 @@
+--- ./src/vbox/GuideChannelMapper.cpp.orig	2020-10-31 11:10:15.000000000 +0100
++++ ./src/vbox/GuideChannelMapper.cpp	2020-11-16 23:51:26.596220878 +0100
+@@ -14,7 +14,8 @@
  
  #include <memory>
  
 -#include <lib/tinyxml2/tinyxml2.h>
++#include <tinyxml2.h>
 +#include <tinyxml2.h>
  
  using namespace vbox;
  using namespace tinyxml2;
 diff -up ./src/vbox/response/Content.cpp.orig ./src/vbox/response/Content.cpp
---- ./src/vbox/response/Content.cpp.orig	2020-06-13 06:07:30.000000000 +0000
-+++ ./src/vbox/response/Content.cpp	2020-08-20 13:48:11.377868999 +0000
-@@ -14,7 +14,7 @@
+--- ./src/vbox/response/Content.cpp.orig	2020-10-31 11:10:15.000000000 +0100
++++ ./src/vbox/response/Content.cpp	2020-11-16 23:51:26.603220703 +0100
+@@ -14,7 +14,8 @@
  #include "../../xmltv/Utilities.h"
  #include "../Channel.h"
  
 -#include <lib/tinyxml2/tinyxml2.h>
 +#include <tinyxml2.h>
++#include <tinyxml2.h>
  
  using namespace tinyxml2;
  using namespace vbox;
 diff -up ./src/vbox/response/Response.h.orig ./src/vbox/response/Response.h
---- ./src/vbox/response/Response.h.orig	2020-06-13 06:07:30.000000000 +0000
-+++ ./src/vbox/response/Response.h	2020-08-20 13:48:11.374869074 +0000
-@@ -12,7 +12,7 @@
+--- ./src/vbox/response/Response.h.orig	2020-10-31 11:10:15.000000000 +0100
++++ ./src/vbox/response/Response.h	2020-11-16 23:51:26.601220753 +0100
+@@ -12,7 +12,8 @@
  #include <memory>
  #include <string>
  
 -#include <lib/tinyxml2/tinyxml2.h>
 +#include <tinyxml2.h>
++#include <tinyxml2.h>
  
  namespace vbox
  {
 diff -up ./src/xmltv/Guide.cpp.orig ./src/xmltv/Guide.cpp
---- ./src/xmltv/Guide.cpp.orig	2020-06-13 06:07:30.000000000 +0000
-+++ ./src/xmltv/Guide.cpp	2020-08-20 13:48:11.356869517 +0000
-@@ -15,7 +15,7 @@
- 
+--- ./src/xmltv/Guide.cpp.orig	2020-10-31 11:10:15.000000000 +0100
++++ ./src/xmltv/Guide.cpp	2020-11-16 23:51:26.587221104 +0100
+@@ -16,7 +16,8 @@
  #include <algorithm>
  
+ #include <kodi/tools/StringUtils.h>
 -#include <lib/tinyxml2/tinyxml2.h>
 +#include <tinyxml2.h>
- #include <p8-platform/util/StringUtils.h>
++#include <tinyxml2.h>
  
+ using namespace kodi::tools;
  using namespace xmltv;
 diff -up ./src/xmltv/Programme.cpp.orig ./src/xmltv/Programme.cpp
---- ./src/xmltv/Programme.cpp.orig	2020-06-13 06:07:30.000000000 +0000
-+++ ./src/xmltv/Programme.cpp	2020-08-20 13:48:11.364869320 +0000
-@@ -11,7 +11,7 @@
+--- ./src/xmltv/Programme.cpp.orig	2020-10-31 11:10:15.000000000 +0100
++++ ./src/xmltv/Programme.cpp	2020-11-16 23:51:26.593220953 +0100
+@@ -11,7 +11,8 @@
  
  #include "Utilities.h"
  
 -#include <lib/tinyxml2/tinyxml2.h>
 +#include <tinyxml2.h>
++#include <tinyxml2.h>
  
  using namespace xmltv;
  using namespace tinyxml2;
 diff -up ./src/xmltv/Utilities.cpp.orig ./src/xmltv/Utilities.cpp
---- ./src/xmltv/Utilities.cpp.orig	2020-06-13 06:07:30.000000000 +0000
-+++ ./src/xmltv/Utilities.cpp	2020-08-20 13:48:11.360869418 +0000
-@@ -15,7 +15,7 @@
+--- ./src/xmltv/Utilities.cpp.orig	2020-10-31 11:10:15.000000000 +0100
++++ ./src/xmltv/Utilities.cpp	2020-11-16 23:51:26.590221029 +0100
+@@ -15,7 +15,8 @@
  #include <sstream>
  #include <stdexcept>
  
 -#include <lib/tinyxml2/tinyxml2.h>
++#include <tinyxml2.h>
 +#include <tinyxml2.h>
  
  using namespace xmltv;

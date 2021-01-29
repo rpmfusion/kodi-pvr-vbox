@@ -3,7 +3,7 @@
 %global kodi_codename Matrix
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
-Version:        8.0.0
+Version:        8.1.0
 Release:        1%{?dist}
 Summary:        VBox Home TV Gateway PVR client for Kodi
 
@@ -50,6 +50,9 @@ rm -r lib/tinyxml2/
 
 
 %changelog
+* Fri Jan 29 2021 Mohamed El Morabity <melmorabity@fedoraproject.org> - 8.1.0-1
+- Update to 8.1.0
+
 * Mon Nov 16 2020 Mohamed El Morabity <melmorabity@fedoraproject.org> - 8.0.0-1
 - Update to 8.0.0
 

@@ -4,7 +4,7 @@
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 Version:        8.1.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        VBox Home TV Gateway PVR client for Kodi
 
 License:        GPLv2+
@@ -50,6 +50,9 @@ rm -r lib/tinyxml2/
 
 
 %changelog
+* Wed Feb 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 8.1.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Fri Jan 29 2021 Mohamed El Morabity <melmorabity@fedoraproject.org> - 8.1.0-1
 - Update to 8.1.0
 

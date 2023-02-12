@@ -3,7 +3,7 @@
 %global kodi_codename Nexus
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
-Version:        20.3.0
+Version:        20.4.0
 Release:        1%{?dist}
 Summary:        VBox Home TV Gateway PVR client for Kodi
 
@@ -55,6 +55,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_metainfodir}/%{name}.met
 
 
 %changelog
+* Sun Feb 12 2023 Mohamed El Morabity <melmorabity@fedoraproject.org> - 2.4.0-1
+- Update to 20.4.0
+
 * Sun Jan 29 2023 Mohamed El Morabity <melmorabity@fedoraproject.org> - 20.3.0-1
 - Update to 20.3.0
 - Add AppStream metadata

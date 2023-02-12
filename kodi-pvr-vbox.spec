@@ -11,9 +11,6 @@ License:        GPL-2.0-or-later
 URL:            https://github.com/kodi-pvr/%{kodi_addon}/
 Source0:        %{url}/archive/%{version}-%{kodi_codename}/%{kodi_addon}-%{version}.tar.gz
 Source1:        %{name}.metainfo.xml
-# Use external tinyxml2 library (see
-# https://github.com/kodi-pvr/pvr.vbox/pull/275)
-Patch0:         %{name}-20.3.0-use_external_tinyxml2.patch
 
 BuildRequires:  cmake3
 BuildRequires:  gcc-c++

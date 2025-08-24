@@ -4,7 +4,7 @@
 
 Name:           kodi-%(tr "." "-" <<<%{kodi_addon})
 Version:        21.1.5
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        VBox Home TV Gateway PVR client for Kodi
 
 License:        GPL-2.0-or-later
@@ -52,6 +52,9 @@ appstream-util validate-relax --nonet $RPM_BUILD_ROOT%{_metainfodir}/%{name}.met
 
 
 %changelog
+* Sun Aug 24 2025 Leigh Scott <leigh123linux@gmail.com> - 21.1.5-3
+- Rebuild for new libtinyxml2
+
 * Sun Jul 27 2025 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 21.1.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_43_Mass_Rebuild
 
